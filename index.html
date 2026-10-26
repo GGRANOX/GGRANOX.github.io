@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Artyom Krasnobrizh</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Artyom Krasnobrizh — Junior Python / AI Developer, Almaty. Projects, experience and contacts.">
+<meta property="og:title" content="Artyom Krasnobrizh — Junior Python / AI Developer">
+<meta property="og:description" content="Python, AI and product work: live platform with AI moderation, Telegram bots, ML ensemble, freelance web.">
+<meta property="og:image" content="photo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: engineering-minimal single column (max 1120px) over a live character field; serif only for the name and section titles. */
+:root {
+  --bg: #F5F8F5;
+  --surface: #FFFFFF;
+  --fg: #101913;
+  --muted: #56645B;
+  --line: #D9E2DB;
+  --accent: #1B7748;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E2F0E7;
+  --field: #1B7748;
+  --field-strength: .8;
+
+  --display: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --step--1: .8125rem;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.5rem;
+  --step-3: clamp(1.9rem, 1.4rem + 2vw, 2.6rem);
+  --step-4: clamp(3rem, 1.8rem + 6vw, 6.25rem);
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C120E; --surface: #121A15; --fg: #E5ECE7; --muted: #93A398; --line: #233029;
+    --accent: #5CC38D; --accent-ink: #06130C; --accent-soft: #15281D; --field: #5CC38D; --field-strength: .7;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C120E; --surface: #121A15; --fg: #E5ECE7; --muted: #93A398; --line: #233029;
+  --accent: #5CC38D; --accent-ink: #06130C; --accent-soft: #15281D; --field: #5CC38D; --field-strength: .7;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+#field { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 700px) {
+  .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); }
+}
+
+/* ---------- top bar ---------- */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.bar .wrap { display: flex; align-items: center; gap: 24px; min-height: 60px; }
+.mark { font-family: var(--mono); font-size: var(--step--1); font-weight: 500; text-decoration: none; letter-spacing: .02em; white-space: nowrap; }
+.mark span { color: var(--accent); }
+.nav { display: flex; gap: 20px; margin-left: auto; }
+.nav a { font-size: .875rem; color: var(--muted); text-decoration: none; }
+.nav a:hover { color: var(--fg); }
+.lang { display: flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--surface); }
+.lang button {
+  font: 500 .75rem/1 var(--mono); letter-spacing: .06em; color: var(--muted);
+  background: none; border: 0; border-radius: 999px; padding: 7px 10px; cursor: pointer;
+}
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+@media (max-width: 899px) { .nav { display: none; } .lang { margin-left: auto; } }
+
+/* ---------- hero ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, .8fr); gap: 56px; align-items: center; padding-block: 72px 56px; }
+.hero-text { min-width: 0; display: grid; gap: 22px; justify-items: start; }
+.status {
+  display: inline-flex; align-items: center; gap: 10px;
+  font: 500 .8125rem/1.3 var(--mono); color: var(--fg);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px 7px 12px;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent); animation: pulse 2.4s infinite; flex: none; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); } 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+h1 {
+  font-family: var(--display); font-weight: 600; font-size: var(--step-4);
+  line-height: .92; letter-spacing: -.015em; margin: 0; text-wrap: balance;
+}
+.role { font: 500 var(--step-1)/1.4 var(--mono); color: var(--accent); margin: 0; min-height: 1.4em; }
+.study { margin: -10px 0 0; color: var(--muted); font-size: .9375rem; }
+.study b { color: var(--fg); font-weight: 600; }
+.pitch { margin: 0; font-size: var(--step-1); max-width: 34em; text-wrap: pretty; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 500 .9375rem/1 var(--body); text-decoration: none; cursor: pointer;
+  color: var(--fg); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 999px; padding: 12px 18px; transition: border-color .15s, transform .15s;
+}
+.btn:hover { border-color: var(--fg); }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn svg { width: 16px; height: 16px; flex: none; }
+.btn .mono { font-family: var(--mono); font-size: .8125rem; }
+.facts { list-style: none; margin: 6px 0 0; padding: 18px 0 0; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: .875rem; color: var(--muted); width: 100%; }
+.facts b { font: 500 .875rem var(--mono); color: var(--fg); margin-right: 6px; }
+
+.portrait { margin: 0; min-width: 0; justify-self: end; width: 100%; max-width: 380px; }
+.portrait img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); background: #fff; }
+.portrait figcaption { font: .75rem/1.4 var(--mono); color: var(--muted); margin-top: 10px; }
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; gap: 32px; padding-block: 36px 40px; }
+  .portrait { order: -1; justify-self: start; max-width: 200px; }
+}
+
+/* ---------- sections ---------- */
+.sec { padding-block: 56px; border-top: 1px solid var(--line); }
+.sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 32px; }
+.sec-head h2 { font-family: var(--display); font-weight: 600; font-size: var(--step-3); line-height: 1; margin: 0; letter-spacing: -.01em; }
+.count { font: .8125rem var(--mono); color: var(--muted); }
+
+.rows { display: grid; gap: 36px; }
+.row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 24px; }
+.when { font: .8125rem/1.7 var(--mono); color: var(--muted); padding-top: 3px; }
+.row h3 { margin: 0; font-size: var(--step-1); font-weight: 600; line-height: 1.35; }
+.org { margin: 2px 0 10px; color: var(--muted); }
+.row ul:not(.tags), .card ul:not(.tags) { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+.row li::marker, .card li::marker { color: var(--accent); }
+.prize { display: inline-block; font: 500 .75rem/1.4 var(--mono); color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 5px 9px; margin-bottom: 12px; }
+@media (max-width: 640px) { .row { grid-template-columns: 1fr; gap: 6px; } }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 14px 0 0; }
+.tags li { font: .75rem/1 var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; background: var(--bg); }
+
+/* projects */
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: flex; flex-direction: column; min-width: 0; }
+.card .meta { font: .75rem/1.5 var(--mono); color: var(--muted); margin: 0 0 12px; }
+.card h3 { margin: 0; font-size: 1.3rem; font-weight: 600; line-height: 1.25; }
+.card .sub { margin: 4px 0 12px; color: var(--muted); }
+.card p.desc { margin: 0 0 12px; }
+.card .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 18px; }
+.card .links a { font: 500 .8125rem/1 var(--mono); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 9px 13px; }
+.card .links a:hover { border-color: var(--fg); }
+.card .links a.go { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.card.feat { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 40px; border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.card.feat h3 { font-family: var(--display); font-size: var(--step-3); line-height: 1; }
+.card.feat .left, .card.feat .right { min-width: 0; display: flex; flex-direction: column; }
+.flag { display: inline-flex; align-self: flex-start; gap: 6px; align-items: center; font: 500 .75rem/1 var(--mono); color: var(--accent-ink); background: var(--accent); border-radius: 999px; padding: 5px 10px; margin-bottom: 14px; }
+@media (max-width: 760px) { .grid { grid-template-columns: 1fr; } .card.feat { grid-template-columns: 1fr; } .card { padding: 20px; } }
+
+/* skills */
+.skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 32px; }
+.skills h3 { font: 500 .75rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+.skills .tags { margin-top: 8px; }
+.skills .tags li { color: var(--fg); background: var(--surface); }
+@media (max-width: 860px) { .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .skills { grid-template-columns: 1fr; } }
+
+/* beyond code */
+.beyond { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+.beyond details { border-bottom: 1px solid var(--line); }
+.beyond summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; font-weight: 500; }
+.beyond summary::-webkit-details-marker { display: none; }
+.beyond summary::after { content: "+"; font-family: var(--mono); color: var(--accent); }
+.beyond details[open] summary::after { content: "−"; }
+.beyond details p { margin: -4px 0 16px; color: var(--muted); max-width: 40em; }
+@media (max-width: 640px) { .beyond { grid-template-columns: 1fr; } }
+
+/* contact + footer */
+.contact { padding-block: 64px 40px; border-top: 1px solid var(--line); display: grid; gap: 18px; justify-items: start; }
+.contact h2 { font-family: var(--display); font-weight: 600; font-size: var(--step-4); line-height: .95; margin: 0; }
+.contact p { margin: 0; color: var(--muted); }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font: .75rem/1.5 var(--mono); color: var(--muted); padding-block: 24px 40px; border-top: 1px solid var(--line); }
+
+.print-only { display: none; }
+
+/* ---------- print / PDF ---------- */
+@media print {
+  @page { size: A4; margin: 13mm 14mm; }
+  :root { --bg: #fff; --surface: #fff; --fg: #111; --muted: #4a4a4a; --line: #d6d6d6; --accent: #1B7748; --accent-soft: #fff; color-scheme: light; }
+  body { font-size: 9.5pt; line-height: 1.45; background: #fff; }
+  body::before, #field, .bar, .cta, .status, .facts, .contact, .foot .hint, .card .links, .portrait figcaption { display: none !important; }
+  .wrap { padding: 0 !important; max-width: none; }
+  .hero { grid-template-columns: 1fr 96px; gap: 20px; padding-block: 0 12px; }
+  .portrait { order: 0; max-width: 96px; justify-self: end; }
+  .hero-text { gap: 6px; }
+  h1 { font-size: 26pt; }
+  .role { font-size: 10.5pt; }
+  .study { margin: 0; }
+  .pitch { font-size: 9.5pt; }
+  .print-only { display: block; }
+  .pcontacts { display: flex; justify-content: space-between; gap: 16px; align-items: center; font: 8.5pt/1.6 var(--mono); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 6px 0; margin: 4px 0 6px; }
+  .pcontacts .qr { display: flex; gap: 8px; align-items: center; font-size: 7.5pt; color: var(--muted); }
+  .pcontacts .qr img, .pcontacts .qr canvas { width: 62px !important; height: 62px !important; }
+  .sec { padding-block: 10px; break-inside: auto; }
+  .sec-head { margin-bottom: 8px; }
+  .sec-head h2 { font-size: 15pt; }
+  .rows { gap: 10px; }
+  .row { grid-template-columns: 110px 1fr; gap: 12px; break-inside: avoid; }
+  .grid { gap: 8px; }
+  .card { padding: 10px 12px; break-inside: avoid; border-radius: 6px; }
+  .card.feat h3 { font-size: 14pt; }
+  .card h3 { font-size: 10.5pt; }
+  .card .sub, .card .meta { margin-bottom: 4px; }
+  .tags { margin-top: 6px; }
+  .tags li { padding: 3px 5px; font-size: 7.5pt; }
+  .skills { grid-template-columns: repeat(3, 1fr); gap: 8px 16px; }
+  .beyond { grid-template-columns: 1fr 1fr; }
+  .beyond summary { padding: 4px 0 0; }
+  .beyond summary::after { content: none; }
+  .beyond details p { margin: 0 0 4px; }
+  .beyond details { border: 0; break-inside: avoid; }
+  .foot { padding-block: 8px 0; }
+  a { text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<canvas id="field" aria-hidden="true"></canvas>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top">artyom<span>.</span>krasnobrizh</a>
+    <nav class="nav" id="nav" aria-label="Sections"></nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" id="lang-ru" data-lang="ru" aria-pressed="false">RU</button>
+      <button type="button" id="lang-kz" data-lang="kz" aria-pressed="false">KZ</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="top"></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ===== Edit these when links change ===== */
+const SITE_URL = "https://ggranox.github.io/";
+const CLIENT_SITE_URL = "";            // TODO: freelance client's live site, e.g. "https://example.kz" — the button appears automatically
+const ML_REPO_URL = "https://github.com/GGRANOX/oilwell-ai";
+const EMAIL = "artem.krasnobrizh@gmail.com";
+const LINKS = {
+  telegram: "https://t.me/GGRANOX",
+  github: "https://github.com/GGRANOX",
+  linkedin: "https://www.linkedin.com/in/artyom-krasnobrizh-86048140a"
+};
+
+const ICON_TG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 3.2 2.9 10.4c-1.3.5-1.3 1.2-.2 1.6l4.8 1.5 1.8 5.6c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.5-1.4ZM8.9 13.2l9.6-6.1c.5-.3.9-.1.5.2l-8.1 7.4-.3 3.4-1.7-4.9Z"/></svg>';
+const ICON_COPY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M9 9h10v10H9zM5 15V5h10"/></svg>';
+const ICON_DL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>';
+
+const T = {
+  en: {
+    htmlLang: "en",
+    title: "Artyom Krasnobrizh",
+    nav: { experience: "Experience", projects: "Projects", skills: "Skills", leadership: "Leadership", education: "Education", beyond: "Beyond code" },
+    status: "Open to internships, part-time & freelance",
+    name: "Artyom Krasnobrizh",
+    role: "Junior Python / AI Developer",
+    study: "IT / AI student at <b>Qazaq AI Research University</b> (QAIRU) · Almaty, on-site or remote",
+    pitch: "I take products from idea to real users: a Telegram bot the whole school relied on, a live anonymous platform with AI moderation, and a paid website for a client.",
+    cta: { tg: "Message on Telegram", copy: "Copy email", copied: "Copied", pdf: "Download PDF", web: "Web version" },
+    facts: [["1", "paid client project"], ["1", "live product"], ["3rd", "place, RIS Prime Hackathon"], ["2nd & 3rd", "for teams I mentored, of 20"]],
+    photo: "Artyom, deep in thought, with a pocket-size David",
+    links: { live: "Live site", code: "Code", tg: "Open in Telegram", play: "Play", client: "Client site" },
+    flag: "Flagship",
+    experience: [
+      { when: "Oct 2026", role: "Freelance web developer", org: "Website for a small business",
+        points: ["Designed and built a complete website from the client's brief.", "Delivered the project; the client accepted and paid for it. My first commercial order.", "Worked AI-assisted to get from brief to finished design quickly."],
+        tags: ["Web design", "AI-assisted development", "Client brief"] }
+    ],
+    projects: [
+      { feat: true, title: "Uslyshano", sub: "“Heard”: an anonymous emotional platform for young people", meta: "Own product · 2026 · in progress",
+        desc: "A public wall of anonymous mood stickers for people aged 16–30. Every post disappears after 7 days. Instead of likes there is a private “I heard you” reaction with no public counter.",
+        points: ["Full post lifecycle with no social-media login; randomized feed and share-as-image cards.", "AI moderation through the OpenAI Moderation API, plus reports, rate limiting and an admin panel.", "Monetization designed in: micro-transactions and ad slots."],
+        stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase · Postgres · Realtime", "OpenAI Moderation API"],
+        links: [["live", "https://uslyshano.vercel.app/"], ["code", "https://github.com/GGRANOX/uslyshano"]] },
+      { title: "Dorm bot", sub: "Telegram bot for my university dormitory", meta: "Own project · 2026 · v2",
+        desc: "The second version of my school bot, rebuilt for the university dorm.",
+        points: ["v1, @iqanathelpbot, automated everyday processes at IQanat. I designed it from scratch and it grew into a service the whole school used.", "v2 carries that experience over to dorm life."],
+        stack: ["Python", "Async", "Telegram Bot API"],
+        links: [["tg", "https://t.me/ObshchagaSaraishyqBot"]] },
+      { title: "OilWell AI", sub: "Predicting optimal pump power for oil wells", meta: "Hackathon · 2025 · sole developer on the team",
+        desc: "Regression on five well parameters: oil level, pressure, current, vibration and temperature.",
+        points: ["Voting ensemble of Random Forest, Gradient Boosting and an MLP neural network, built as scikit-learn pipelines with scalers.", "Emergency threshold checks, YAML config, rotating logs and unit tests.", "Prototype trained on synthetic data; the team had no access to real well data."],
+        stack: ["Python", "scikit-learn", "pandas", "NumPy"],
+        links: [["code", ML_REPO_URL]] },
+      { title: "Soyle", sub: "Kazakh language learning platform", meta: "Team project · 3rd place, RIS Prime Hackathon",
+        desc: "A national hackathon among the strongest schools in Kazakhstan.",
+        points: ["On the team I built the app logic and the interactive learning mechanics."],
+        stack: ["Product logic", "Learning mechanics"], links: [] },
+      { title: "Roguelike Calculator", sub: "Mini-game from the IT Daryn micro-hackathon", meta: "IT Daryn · final (3rd) round",
+        desc: "A working game made against the clock in the final round of IT Daryn.",
+        points: ["Built AI-assisted with v0 and deployed on Vercel."],
+        stack: ["Next.js", "TypeScript", "v0"],
+        links: [["play", "https://v0-roguelike-calculator-game.vercel.app"], ["code", "https://github.com/GGRANOX/v0-roguelike-calculator-game"]] }
+    ],
+    skills: [
+      ["Programming", ["Python", "TypeScript", "JavaScript"]],
+      ["AI & ML", ["scikit-learn", "Random Forest · Gradient Boosting · MLP", "pandas", "NumPy", "LLM APIs: OpenAI, Gemini", "OpenAI Moderation API", "Prompt engineering"]],
+      ["Web & backend", ["Next.js", "Tailwind CSS", "Supabase: Postgres, Realtime", "Async Python", "Telegram bots", "Automation scripts"]],
+      ["Tools", ["Git", "GitHub", "Vercel", "AI-assisted development: v0, Claude"]],
+      ["Product", ["MVP design", "Monetization logic", "UX/UI", "Running hackathons"]],
+      ["Languages", ["Russian — native", "English — B1, IELTS 5.5, technical docs", "Kazakh — A1"]]
+    ],
+    leadership: [
+      { when: "IQanat", role: "Co-organizer & mentor", org: "24-hour internal IT hackathon",
+        points: ["Organized the hackathon from scratch with a team to bring out IT talent among students.", "Mentored two teams. Out of 20 teams, mine took 2nd and 3rd place, each shipping an MVP in 24 hours.", "Co-wrote the rules, technical tasks and judging criteria."] },
+      { when: "IQanat", role: "Curator & volunteer mentor", org: "Peer-to-Peer program", prize: "iF SOCIAL IMPACT PRIZE 2026 winner · top 21 of 1500+ projects from 127 countries",
+        points: ["Grew from volunteer to curator of the program.", "Taught math for free to students from rural areas and prepared them for IQanat admission. My students passed and enrolled."] },
+      { when: "IQanat", role: "Author", org: "Kaizen social project",
+        points: ["Designed and carried out small, targeted improvements to the school environment, such as clear navigation and rules, following the Kaizen approach."] }
+    ],
+    education: [
+      { when: "2026 — now", role: "Qazaq AI Research University (QAIRU)", org: "Information Technology / Artificial Intelligence", points: [] },
+      { when: "2024 — 2026", role: "IQanat High School of Burabay", org: "Shchuchinsk / Burabay · physics & math / IT track",
+        points: ["Full grant: selected among the top 100 eighth-graders in Kazakhstan", "GPA 4.8 / 5.0", "UNT (national exam): 103 points"] },
+      { when: "2015 — 2024", role: "School No. 33", org: "Basic secondary education", points: ["GPA 5.0 / 5.0, diploma with honors"] }
+    ],
+    beyond: [
+      ["Art & design", "Winner of an international drawing competition. A trained eye for visuals helps me in product work and UI/UX."],
+      ["Networking & presenting", "Experience presenting to top management, business leaders and IQanat trustees."],
+      ["Sleight of hand", "Card technique and close-up magic. A reliable icebreaker at networking events, including with key people and investors."],
+      ["Chess", "3rd category. Systematic, strategic thinking."],
+      ["Ballroom dancing", "Competed in and won international tournaments. Discipline and stage presence."],
+      ["Sport", "Basketball and regular strength training."]
+    ],
+    contactTitle: "Let's talk",
+    contactText: "The fastest way to reach me is Telegram.",
+    hint: "The background is live: move the cursor or click anywhere."
+  },
+
+  ru: {
+    htmlLang: "ru",
+    title: "Артём Краснобриж",
+    nav: { experience: "Опыт", projects: "Проекты", skills: "Навыки", leadership: "Лидерство", education: "Образование", beyond: "Вне кода" },
+    status: "Открыт к стажировке, part-time и фрилансу",
+    name: "Артём Краснобриж",
+    role: "Junior Python / AI Developer",
+    study: "Студент IT / AI в <b>Qazaq AI Research University</b> (QAIRU) · Алматы, офис или удалённо",
+    pitch: "Довожу продукты от идеи до реальных пользователей: Telegram-бот, которым пользовалась вся школа, живая анонимная платформа с AI-модерацией и оплаченный сайт для заказчика.",
+    cta: { tg: "Написать в Telegram", copy: "Скопировать email", copied: "Скопировано", pdf: "Скачать PDF", web: "Веб-версия" },
+    facts: [["1", "оплаченный коммерческий проект"], ["1", "продукт в продакшене"], ["3 место", "RIS Prime Hackathon"], ["2 и 3 места", "у команд, которые я менторил (из 20)"]],
+    photo: "Артём обдумывает архитектуру. Давид в руке для масштаба",
+    links: { live: "Сайт", code: "Код", tg: "Открыть в Telegram", play: "Играть", client: "Сайт заказчика" },
+    flag: "Флагман",
+    experience: [
+      { when: "Окт 2026", role: "Фриланс — веб-разработчик", org: "Сайт для малого бизнеса",
+        points: ["Сделал полноценный дизайн и сайт по ТЗ заказчика.", "Сдал проект: заказчик принял и оплатил работу. Мой первый коммерческий заказ.", "Использовал AI-assisted разработку, чтобы быстро пройти путь от ТЗ до готового дизайна."],
+        tags: ["Веб-дизайн", "AI-assisted разработка", "Работа по ТЗ"] }
+    ],
+    projects: [
+      { feat: true, title: "Услышано", sub: "Анонимная эмоциональная платформа для молодёжи", meta: "Свой продукт · 2026 · в работе",
+        desc: "Публичная стена анонимных стикеров с настроением для людей 16–30 лет. Каждый пост исчезает через 7 дней. Вместо лайков — личный отклик «Услышал(а)» без публичного счётчика.",
+        points: ["Полный цикл публикаций без привязки к соцсетям, рандомная лента, шеринг поста картинкой.", "AI-модерация через OpenAI Moderation API, жалобы, rate limiting и админка.", "Заложена монетизация: микротранзакции и рекламные слоты."],
+        stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase · Postgres · Realtime", "OpenAI Moderation API"],
+        links: [["live", "https://uslyshano.vercel.app/"], ["code", "https://github.com/GGRANOX/uslyshano"]] },
+      { title: "Бот общежития", sub: "Telegram-бот для университетского общежития", meta: "Свой проект · 2026 · v2",
+        desc: "Вторая версия моего школьного бота, переделанная под общежитие университета.",
+        points: ["v1 (@iqanathelpbot) автоматизировал школьные процессы в IQanat. Я спроектировал его с нуля, и он стал сервисом, которым пользовалась вся школа.", "v2 переносит этот опыт на жизнь общежития."],
+        stack: ["Python", "Async", "Telegram Bot API"],
+        links: [["tg", "https://t.me/ObshchagaSaraishyqBot"]] },
+      { title: "OilWell AI", sub: "Прогноз оптимальной мощности насоса нефтяной скважины", meta: "Хакатон · 2025 · единственный разработчик в команде",
+        desc: "Регрессия по пяти параметрам скважины: уровень нефти, давление, ток, вибрация, температура.",
+        points: ["Ансамбль VotingRegressor из Random Forest, Gradient Boosting и нейросети MLP, собранный на пайплайнах scikit-learn со скейлерами.", "Проверка аварийных порогов, конфиг в YAML, логирование с ротацией, юнит-тесты.", "Прототип обучен на синтетических данных: реальных данных скважин у команды не было."],
+        stack: ["Python", "scikit-learn", "pandas", "NumPy"],
+        links: [["code", ML_REPO_URL]] },
+      { title: "Soyle", sub: "Платформа для изучения казахского языка", meta: "Командный проект · 3 место, RIS Prime Hackathon",
+        desc: "Республиканский хакатон среди сильнейших школ Казахстана.",
+        points: ["В команде отвечал за логику приложения и интерактивные обучающие механики."],
+        stack: ["Логика продукта", "Обучающие механики"], links: [] },
+      { title: "Roguelike Calculator", sub: "Мини-игра с микро-хакатона IT Daryn", meta: "IT Daryn · финальный (3-й) тур",
+        desc: "Рабочая игра, сделанная за ограниченное время в финальном туре IT Daryn.",
+        points: ["Собрана в AI-assisted режиме в v0 и развёрнута на Vercel."],
+        stack: ["Next.js", "TypeScript", "v0"],
+        links: [["play", "https://v0-roguelike-calculator-game.vercel.app"], ["code", "https://github.com/GGRANOX/v0-roguelike-calculator-game"]] }
+    ],
+    skills: [
+      ["Программирование", ["Python", "TypeScript", "JavaScript"]],
+      ["AI и ML", ["scikit-learn", "Random Forest · Gradient Boosting · MLP", "pandas", "NumPy", "LLM API: OpenAI, Gemini", "OpenAI Moderation API", "Prompt engineering"]],
+      ["Веб и бэкенд", ["Next.js", "Tailwind CSS", "Supabase: Postgres, Realtime", "Асинхронный Python", "Telegram-боты", "Скрипты автоматизации"]],
+      ["Инструменты", ["Git", "GitHub", "Vercel", "AI-assisted разработка: v0, Claude"]],
+      ["Продукт", ["Проектирование MVP", "Логика монетизации", "UX/UI", "Проведение хакатонов"]],
+      ["Языки", ["Русский — родной", "Английский — B1, IELTS 5.5, техническая документация", "Казахский — A1"]]
+    ],
+    leadership: [
+      { when: "IQanat", role: "Соорганизатор и ментор", org: "24-часовой внутришкольный IT-хакатон",
+        points: ["В составе команды с нуля организовал хакатон, чтобы раскрыть IT-таланты учеников.", "Менторил две команды. Из 20 команд мои заняли 2-е и 3-е места, каждая сделала MVP за 24 часа.", "Вместе с командой разработал регламент, технические задания и критерии оценки."] },
+      { when: "IQanat", role: "Куратор и волонтёр-ментор", org: "Программа Peer-to-Peer", prize: "Победитель iF SOCIAL IMPACT PRIZE 2026 · топ-21 из 1500+ проектов из 127 стран",
+        points: ["Прошёл путь от волонтёра до куратора направления.", "Бесплатно преподавал математику школьникам из сельской местности и готовил их к поступлению в IQanat. Мои подопечные поступили."] },
+      { when: "IQanat", role: "Автор", org: "Социальный проект «Кайдзен»",
+        points: ["Спроектировал и внедрил точечные улучшения школьной среды по концепции Kaizen: понятную навигацию и правила."] }
+    ],
+    education: [
+      { when: "2026 — н.в.", role: "Qazaq AI Research University (QAIRU)", org: "Информационные технологии / Искусственный интеллект", points: [] },
+      { when: "2024 — 2026", role: "IQanat High School of Burabay", org: "Щучинск / Бурабай · физмат / IT-профиль",
+        points: ["Полный грант: вошёл в топ-100 восьмиклассников Казахстана", "GPA 4.8 / 5.0", "ЕНТ: 103 балла"] },
+      { when: "2015 — 2024", role: "Средняя школа №33", org: "Основное среднее образование", points: ["GPA 5.0 / 5.0, аттестат с отличием"] }
+    ],
+    beyond: [
+      ["Изобразительное искусство и дизайн", "Победитель Международного конкурса рисунков. Развитое визуальное восприятие помогает в продуктовой разработке и UX/UI."],
+      ["Нетворкинг и презентации", "Опыт презентаций перед топ-менеджментом, бизнес-лидерами и попечителями IQanat."],
+      ["Ловкость рук", "Карточная техника и микромагия: работающий ice-breaker для нетворкинга, в том числе с ключевыми людьми и инвесторами."],
+      ["Шахматы", "3 разряд. Системное и стратегическое мышление."],
+      ["Бальные танцы", "Участие и победы в международных турнирах. Дисциплина и умение держаться на сцене."],
+      ["Спорт", "Баскетбол и регулярные силовые тренировки."]
+    ],
+    contactTitle: "Давайте поговорим",
+    contactText: "Быстрее всего я отвечаю в Telegram.",
+    hint: "Фон живой: поводите курсором или кликните в любом месте."
+  },
+
+  kz: {
+    htmlLang: "kk",
+    title: "Артём Краснобриж",
+    nav: { experience: "Тәжірибе", projects: "Жобалар", skills: "Дағдылар", leadership: "Көшбасшылық", education: "Білім", beyond: "Кодтан тыс" },
+    status: "Тағылымдамаға, part-time және фрилансқа ашықпын",
+    name: "Артём Краснобриж",
+    role: "Junior Python / AI Developer",
+    study: "<b>Qazaq AI Research University</b> (QAIRU), IT / AI студенті · Алматы, офис немесе қашықтан",
+    pitch: "Өнімді идеядан нақты қолданушыларға дейін жеткіземін: бүкіл мектеп қолданған Telegram-бот, AI-модерациясы бар жұмыс істеп тұрған анонимді платформа және тапсырыс берушіге сатылған сайт.",
+    cta: { tg: "Telegram-ға жазу", copy: "Email көшіру", copied: "Көшірілді", pdf: "PDF жүктеу", web: "Веб-нұсқа" },
+    facts: [["1", "ақылы коммерциялық жоба"], ["1", "жұмыс істеп тұрған өнім"], ["3-орын", "RIS Prime Hackathon"], ["2 және 3-орын", "мен менторлық еткен командалар (20-дан)"]],
+    photo: "Артём архитектураны ойластырып тұр. Қолында — Давид",
+    links: { live: "Сайт", code: "Код", tg: "Telegram-да ашу", play: "Ойнау", client: "Тапсырыс берушінің сайты" },
+    flag: "Басты жоба",
+    experience: [
+      { when: "Қаз 2026", role: "Фриланс веб-әзірлеуші", org: "Шағын бизнеске арналған сайт",
+        points: ["Тапсырыс берушінің техникалық тапсырмасы бойынша толық дизайн мен сайт жасадым.", "Жобаны тапсырдым: тапсырыс беруші қабылдап, ақысын төледі. Менің алғашқы коммерциялық тапсырысым.", "Техникалық тапсырмадан дайын дизайнға тез жету үшін AI-assisted әзірлеуді қолдандым."],
+        tags: ["Веб-дизайн", "AI-assisted әзірлеу", "Техникалық тапсырма"] }
+    ],
+    projects: [
+      { feat: true, title: "Услышано", sub: "Жастарға арналған анонимді эмоционалдық платформа", meta: "Өз өнімім · 2026 · жалғасуда",
+        desc: "16–30 жастағы адамдарға арналған көңіл-күй стикерлерінің анонимді қабырғасы. Әр жазба 7 күннен кейін жоғалады. Лайктың орнына — жария есептегіші жоқ жеке «Естідім» реакциясы.",
+        points: ["Әлеуметтік желіге байланбайтын жарияланымдардың толық циклі, кездейсоқ лента, жазбаны сурет ретінде бөлісу.", "OpenAI Moderation API арқылы AI-модерация, шағымдар, rate limiting және әкімші панелі.", "Монетизация қарастырылған: микротранзакциялар және жарнама орындары."],
+        stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase · Postgres · Realtime", "OpenAI Moderation API"],
+        links: [["live", "https://uslyshano.vercel.app/"], ["code", "https://github.com/GGRANOX/uslyshano"]] },
+      { title: "Жатақхана боты", sub: "Университет жатақханасына арналған Telegram-бот", meta: "Өз жобам · 2026 · v2",
+        desc: "Мектептегі ботымның университет жатақханасына бейімделген екінші нұсқасы.",
+        points: ["v1 (@iqanathelpbot) IQanat мектебіндегі күнделікті процестерді автоматтандырды. Оны нөлден жобаладым, ол бүкіл мектеп қолданған сервиске айналды.", "v2 сол тәжірибені жатақхана өміріне көшіреді."],
+        stack: ["Python", "Async", "Telegram Bot API"],
+        links: [["tg", "https://t.me/ObshchagaSaraishyqBot"]] },
+      { title: "OilWell AI", sub: "Мұнай ұңғымасы сорғысының оңтайлы қуатын болжау", meta: "Хакатон · 2025 · командадағы жалғыз әзірлеуші",
+        desc: "Ұңғыманың бес параметрі бойынша регрессия: мұнай деңгейі, қысым, ток, діріл, температура.",
+        points: ["Random Forest, Gradient Boosting және MLP нейрожелісінен тұратын VotingRegressor ансамблі, масштабтағыштары бар scikit-learn пайплайндарында.", "Апаттық шектерді тексеру, YAML-конфиг, ротациясы бар логтау, юнит-тесттер.", "Прототип синтетикалық деректерде оқытылды: командада нақты ұңғыма деректері болмады."],
+        stack: ["Python", "scikit-learn", "pandas", "NumPy"],
+        links: [["code", ML_REPO_URL]] },
+      { title: "Soyle", sub: "Қазақ тілін үйренуге арналған платформа", meta: "Командалық жоба · 3-орын, RIS Prime Hackathon",
+        desc: "Қазақстанның ең мықты мектептері арасындағы республикалық хакатон.",
+        points: ["Командада қосымшаның логикасы мен интерактивті оқу механикаларына жауап бердім."],
+        stack: ["Өнім логикасы", "Оқу механикалары"], links: [] },
+      { title: "Roguelike Calculator", sub: "IT Daryn микро-хакатонында жасалған шағын ойын", meta: "IT Daryn · финалдық (3-) тур",
+        desc: "IT Daryn финалдық турында шектеулі уақытта жасалған жұмыс істейтін ойын.",
+        points: ["v0 арқылы AI-assisted режимде құрастырылып, Vercel-де орналастырылды."],
+        stack: ["Next.js", "TypeScript", "v0"],
+        links: [["play", "https://v0-roguelike-calculator-game.vercel.app"], ["code", "https://github.com/GGRANOX/v0-roguelike-calculator-game"]] }
+    ],
+    skills: [
+      ["Бағдарламалау", ["Python", "TypeScript", "JavaScript"]],
+      ["AI және ML", ["scikit-learn", "Random Forest · Gradient Boosting · MLP", "pandas", "NumPy", "LLM API: OpenAI, Gemini", "OpenAI Moderation API", "Prompt engineering"]],
+      ["Веб және бэкенд", ["Next.js", "Tailwind CSS", "Supabase: Postgres, Realtime", "Асинхронды Python", "Telegram-боттар", "Автоматтандыру скрипттері"]],
+      ["Құралдар", ["Git", "GitHub", "Vercel", "AI-assisted әзірлеу: v0, Claude"]],
+      ["Өнім", ["MVP жобалау", "Монетизация логикасы", "UX/UI", "Хакатондар өткізу"]],
+      ["Тілдер", ["Орыс тілі — ана тілі", "Ағылшын тілі — B1, IELTS 5.5, техникалық құжаттама", "Қазақ тілі — A1"]]
+    ],
+    leadership: [
+      { when: "IQanat", role: "Бірлескен ұйымдастырушы және ментор", org: "24 сағаттық мектепішілік IT-хакатон",
+        points: ["Командамен бірге оқушылардың IT-талантын ашуға арналған хакатонды нөлден ұйымдастырдым.", "Екі командаға менторлық еттім. 20 команданың ішінен менің командаларым 2 және 3-орын алды, әрқайсысы 24 сағатта MVP жасады.", "Командамен бірге ереже, техникалық тапсырмалар мен бағалау критерийлерін әзірледім."] },
+      { when: "IQanat", role: "Куратор және ерікті ментор", org: "Peer-to-Peer бағдарламасы", prize: "iF SOCIAL IMPACT PRIZE 2026 жеңімпазы · 127 елдің 1500+ жобасы ішінен үздік 21",
+        points: ["Еріктіден бағыт кураторына дейін өстім.", "Ауыл оқушыларына математиканы тегін оқытып, IQanat-қа түсуге дайындадым. Шәкірттерім оқуға түсті."] },
+      { when: "IQanat", role: "Автор", org: "«Кайдзен» әлеуметтік жобасы",
+        points: ["Kaizen тәсілі бойынша мектеп ортасын нүктелік жақсартуды жобалап, енгіздім: түсінікті навигация мен ережелер."] }
+    ],
+    education: [
+      { when: "2026 — қазір", role: "Qazaq AI Research University (QAIRU)", org: "Ақпараттық технологиялар / Жасанды интеллект", points: [] },
+      { when: "2024 — 2026", role: "IQanat High School of Burabay", org: "Щучинск / Бурабай · физика-математика / IT бағыты",
+        points: ["Толық грант: Қазақстандағы үздік 100 сегізінші сынып оқушысының қатарына ендім", "GPA 4.8 / 5.0", "ҰБТ: 103 балл"] },
+      { when: "2015 — 2024", role: "№33 орта мектеп", org: "Негізгі орта білім", points: ["GPA 5.0 / 5.0, үздік аттестат"] }
+    ],
+    beyond: [
+      ["Бейнелеу өнері және дизайн", "Халықаралық сурет байқауының жеңімпазы. Дамыған визуалды талғам өнім әзірлеуде және UX/UI-да көмектеседі."],
+      ["Нетворкинг және презентация", "Топ-менеджмент, бизнес көшбасшылары және IQanat қамқоршылары алдында презентация жасау тәжірибесі."],
+      ["Қол шеберлігі", "Карта техникасы және микромагия: нетворкингте, соның ішінде маңызды адамдармен және инвесторлармен танысуда жақсы ice-breaker."],
+      ["Шахмат", "3-разряд. Жүйелі және стратегиялық ойлау."],
+      ["Бальдық билер", "Халықаралық турнирлерге қатысып, жеңіске жеттім. Тәртіп пен сахнада өзін ұстау."],
+      ["Спорт", "Баскетбол және тұрақты күш жаттығулары."]
+    ],
+    contactTitle: "Хабарласыңыз",
+    contactText: "Маған ең жылдам Telegram арқылы жазуға болады.",
+    hint: "Фон тірі: курсорды жылжытыңыз немесе кез келген жерді басыңыз."
+  }
+};
+
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const inFrame = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+const pad = n => String(n).padStart(2, "0");
+const tags = list => list.length ? `<ul class="tags">${list.map(s => `<li>${s}</li>`).join("")}</ul>` : "";
+const bullets = list => list.length ? `<ul>${list.map(s => `<li>${s}</li>`).join("")}</ul>` : "";
+const ext = 'target="_blank" rel="noopener"';
+
+function section(id, t, count, body) {
+  return `<section class="sec" id="${id}"><div class="sec-head"><h2>${t.nav[id]}</h2><span class="count">${pad(count)}</span></div>${body}</section>`;
+}
+function rows(items) {
+  return `<div class="rows">${items.map(it => `
+    <div class="row">
+      <div class="when">${it.when}</div>
+      <div>
+        <h3>${it.role}</h3>
+        <p class="org">${it.org}</p>
+        ${it.prize ? `<span class="prize">${it.prize}</span>` : ""}
+        ${bullets(it.points)}
+        ${it.tags ? tags(it.tags) : ""}
+        ${it.link ? `<p style="margin:14px 0 0"><a class="btn" href="${it.link}" ${ext}>${it.linkLabel} ↗</a></p>` : ""}
+      </div>
+    </div>`).join("")}</div>`;
+}
+function card(p, t) {
+  const links = p.links.length ? `<div class="links">${p.links.map(([k, href], i) =>
+    `<a class="${i === 0 ? "go" : ""}" href="${href}" ${ext}>${t.links[k]} ↗</a>`).join("")}</div>` : "";
+  if (p.feat) {
+    return `<article class="card feat">
+      <div class="left">
+        <span class="flag">★ ${t.flag}</span>
+        <p class="meta">${p.meta}</p>
+        <h3>${p.title}</h3>
+        <p class="sub">${p.sub}</p>
+        <p class="desc">${p.desc}</p>
+        ${links}
+      </div>
+      <div class="right">${bullets(p.points)}${tags(p.stack)}</div>
+    </article>`;
+  }
+  return `<article class="card">
+    <p class="meta">${p.meta}</p>
+    <h3>${p.title}</h3>
+    <p class="sub">${p.sub}</p>
+    <p class="desc">${p.desc}</p>
+    ${bullets(p.points)}
+    ${tags(p.stack)}
+    ${links}
+  </article>`;
+}
+
+function render(lang) {
+  const t = T[lang];
+  document.documentElement.lang = t.htmlLang;
+  document.title = t.title;
+  document.getElementById("nav").innerHTML = ["experience", "projects", "skills", "leadership", "education", "beyond"]
+    .map(id => `<a href="#${id}">${t.nav[id]}</a>`).join("");
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+
+  const exp = t.experience.map(e => CLIENT_SITE_URL ? { ...e, link: CLIENT_SITE_URL, linkLabel: t.links.client } : e);
+  const beyondOpen = (() => { try { return localStorage.getItem("cv-beyond") === "open"; } catch (e) { return false; } })();
+
+  document.getElementById("top").innerHTML = `
+    <section class="hero">
+      <div class="hero-text">
+        <span class="status"><span class="dot"></span>${t.status}</span>
+        <h1>${t.name}</h1>
+        <p class="role"><span class="sr-only">${t.role}</span><span id="roleText" aria-hidden="true">${t.role}</span></p>
+        <p class="study">${t.study}</p>
+        <div class="print-only pcontacts">
+          <div>${EMAIL} · t.me/GGRANOX · github.com/GGRANOX<br>linkedin.com/in/artyom-krasnobrizh-86048140a</div>
+          <div class="qr"><span>${t.cta.web}<br>${SITE_URL.replace("https://", "")}</span><span id="qr"></span></div>
+        </div>
+        <p class="pitch">${t.pitch}</p>
+        <div class="cta">
+          <a class="btn primary" href="${LINKS.telegram}" ${ext}>${ICON_TG}${t.cta.tg}</a>
+          <button class="btn" type="button" id="copyEmail" title="${t.cta.copy}"><span class="mono">${EMAIL}</span>${ICON_COPY}<span class="sr-only">${t.cta.copy}</span></button>
+          <a class="btn" href="${LINKS.github}" ${ext}>GitHub ↗</a>
+          <a class="btn" href="${LINKS.linkedin}" ${ext}>LinkedIn ↗</a>
+          ${inFrame ? "" : `<button class="btn" type="button" id="pdfBtn">${ICON_DL}${t.cta.pdf}</button>`}
+        </div>
+        <ul class="facts">${t.facts.map(([n, s]) => `<li><b>${n}</b>${s}</li>`).join("")}</ul>
+      </div>
+      <figure class="portrait">
+        <img src="photo.jpg" width="640" height="640" alt="${t.name}">
+        <figcaption>${t.photo}</figcaption>
+      </figure>
+    </section>
+    ${section("experience", t, exp.length, rows(exp))}
+    ${section("projects", t, t.projects.length, `<div class="grid">${t.projects.map(p => card(p, t)).join("")}</div>`)}
+    ${section("skills", t, t.skills.length, `<div class="skills">${t.skills.map(([h, list]) => `<div><h3>${h}</h3>${tags(list)}</div>`).join("")}</div>`)}
+    ${section("leadership", t, t.leadership.length, rows(t.leadership))}
+    ${section("education", t, t.education.length, rows(t.education))}
+    ${section("beyond", t, t.beyond.length, `<div class="beyond">${t.beyond.map(([h, p], i) =>
+      `<details id="beyond-${i}"${beyondOpen ? " open" : ""}><summary>${h}</summary><p>${p}</p></details>`).join("")}</div>`)}
+    <section class="contact">
+      <h2>${t.contactTitle}</h2>
+      <p>${t.contactText}</p>
+      <div class="cta">
+        <a class="btn primary" href="${LINKS.telegram}" ${ext}>${ICON_TG}${t.cta.tg}</a>
+        <a class="btn" href="mailto:${EMAIL}"><span class="mono">${EMAIL}</span></a>
+      </div>
+    </section>
+    <footer class="foot">
+      <span>© 2026 ${t.name}</span>
+      <span class="hint">${t.hint}</span>
+    </footer>`;
+
+  document.getElementById("copyEmail").addEventListener("click", e => copyEmail(e.currentTarget, t));
+  const pdf = document.getElementById("pdfBtn");
+  if (pdf) pdf.addEventListener("click", () => window.print());
+  makeQR();
+  decode(document.getElementById("roleText"), t.role);
+}
+
+function copyEmail(btn, t) {
+  const label = btn.querySelector(".mono");
+  const done = () => { label.textContent = t.cta.copied; setTimeout(() => { label.textContent = EMAIL; }, 1600); };
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents(label); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+  try { navigator.clipboard.writeText(EMAIL).then(done, fallback); } catch (e) { fallback(); }
+}
+
+function makeQR() {
+  const el = document.getElementById("qr");
+  if (!el || typeof QRCode === "undefined") return;
+  try { new QRCode(el, { text: SITE_URL, width: 124, height: 124, colorDark: "#111111", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M }); } catch (e) {}
+}
+
+/* Role line resolves from code-like glyphs, matching the background field */
+function decode(el, text) {
+  if (!el || reduceMotion.matches) return;
+  const glyphs = "01<>/{}[]#*+=";
+  const start = performance.now(), dur = 750;
+  function step(now) {
+    const p = Math.min(1, (now - start) / dur);
+    const n = Math.floor(p * text.length);
+    let out = text.slice(0, n);
+    for (let i = n; i < text.length; i++) out += text[i] === " " ? " " : glyphs[(Math.random() * glyphs.length) | 0];
+    el.textContent = out;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+  setTimeout(() => { el.textContent = text; }, dur + 400);  // rAF pauses in background tabs
+}
+
+/* ---------- language ---------- */
+function pickLang() {
+  const q = new URLSearchParams(location.search).get("lang");
+  if (q && T[q]) return q;
+  try { const s = localStorage.getItem("cv-lang"); if (s && T[s]) return s; } catch (e) {}
+  return "en";
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => {
+  const lang = b.dataset.lang;
+  try { localStorage.setItem("cv-lang", lang); } catch (e) {}
+  render(lang);
+}));
+document.addEventListener("toggle", e => {
+  if (!e.target.matches || !e.target.matches(".beyond details")) return;
+  const any = [...document.querySelectorAll(".beyond details")].some(d => d.open);
+  try { localStorage.setItem("cv-beyond", any ? "open" : "closed"); } catch (err) {}
+}, true);
+
+/* print: expand every collapsible so the PDF is complete */
+let printOpened = [];
+addEventListener("beforeprint", () => {
+  printOpened = [...document.querySelectorAll("details:not([open])")];
+  printOpened.forEach(d => d.open = true);
+});
+addEventListener("afterprint", () => { printOpened.forEach(d => d.open = false); printOpened = []; });
+
+render(pickLang());
+if (location.hash.length > 1) {
+  const jump = () => { const target = document.getElementById(location.hash.slice(1)); if (target) target.scrollIntoView(); };
+  jump();
+  addEventListener("load", jump, { once: true });
+}
+
+/* ---------- character field ---------- */
+(function field() {
+  const cv = document.getElementById("field");
+  const ctx = cv.getContext("2d");
+  if (!ctx) return;
+  const coarse = matchMedia("(pointer: coarse)").matches;
+  const RAMP = [" ", ".", "·", ":", "-", "=", "+", "*", "#", "%", "@"];
+  const GLITCH = ["0", "1", "/", "\\", "<", ">", "{", "}", "[", "]", "#", "*", "+", "=", "?", "λ"];
+  const ALL = [...new Set([...RAMP, ...GLITCH])].filter(c => c !== " ");
+  const WAVE_LIFE = 2200, WAVE_SPEED = .55, WAVE_WIDTH = 38, CURSOR_R = 110;
+
+  let W = 0, H = 0, dpr = 1, cell = 16, cols = 0, rows = 0, seeds = new Float32Array(0);
+  let atlas = {}, color = "#1B7748", strength = .5, last = 0;
+  const ptr = { x: -9999, y: -9999, w: 0, target: 0 };
+  const waves = [];
+
+  function readTheme() {
+    const cs = getComputedStyle(document.documentElement);
+    color = cs.getPropertyValue("--field").trim() || color;
+    strength = parseFloat(cs.getPropertyValue("--field-strength")) || strength;
+  }
+  function buildAtlas() {
+    readTheme();
+    atlas = {};
+    const s = Math.ceil(cell * dpr);
+    for (const ch of ALL) {
+      const c = document.createElement("canvas");
+      c.width = c.height = s;
+      const g = c.getContext("2d");
+      g.fillStyle = color;
+      g.font = `500 ${Math.round(cell * .74 * dpr)}px "IBM Plex Mono", ui-monospace, monospace`;
+      g.textAlign = "center"; g.textBaseline = "middle";
+      g.fillText(ch, s / 2, s / 2);
+      atlas[ch] = c;
+    }
+  }
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = document.documentElement.clientWidth; H = innerHeight;
+    cell = W < 700 ? 18 : 15;
+    cv.width = Math.ceil(W * dpr); cv.height = Math.ceil(H * dpr);
+    cv.style.width = W + "px"; cv.style.height = H + "px";
+    cols = Math.ceil(W / cell) + 1; rows = Math.ceil(H / cell) + 1;
+    seeds = new Float32Array(cols * rows);
+    for (let i = 0; i < seeds.length; i++) seeds[i] = Math.random();
+    buildAtlas();
+    if (reduceMotion.matches) draw(0);
+  }
+  function draw(t) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ptr.w += (ptr.target - ptr.w) * .08;
+    for (let i = waves.length - 1; i >= 0; i--) if (t - waves[i].t > WAVE_LIFE) waves.splice(i, 1);
+    const R2 = 2 * CURSOR_R * CURSOR_R, step = cell * dpr;
+    for (let r = 0; r < rows; r++) {
+      const y = r * cell + cell / 2;
+      for (let c = 0; c < cols; c++) {
+        const x = c * cell + cell / 2, sd = seeds[r * cols + c];
+        let v = .13 + .08 * Math.sin(c * .21 + t * .00045 + sd * .6) * Math.cos(r * .17 - t * .00035) + .05 * Math.sin((c + r) * .08 + t * .0002);
+        if (ptr.w > .01) { const dx = x - ptr.x, dy = y - ptr.y; v += ptr.w * .75 * Math.exp(-(dx * dx + dy * dy) / R2); }
+        let wb = 0;
+        for (const w of waves) {
+          const age = t - w.t, dx = x - w.x, dy = y - w.y;
+          const k = (Math.sqrt(dx * dx + dy * dy) - age * WAVE_SPEED) / WAVE_WIDTH;
+          if (k > -3 && k < 3) wb += Math.exp(-k * k) * (1 - age / WAVE_LIFE);
+        }
+        v += wb * .85;
+        if (v < .06) continue;
+        if (v > 1) v = 1;
+        const ch = wb > .22
+          ? GLITCH[(Math.floor(sd * 97) + Math.floor(t / 70)) % GLITCH.length]
+          : RAMP[Math.min(RAMP.length - 1, Math.max(1, Math.round(v * (RAMP.length - 1))))];
+        const g = atlas[ch];
+        if (!g) continue;
+        ctx.globalAlpha = v * strength;
+        ctx.drawImage(g, c * step, r * step);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  function loop(t) {
+    requestAnimationFrame(loop);
+    if (document.hidden) return;
+    if (coarse && t - last < 33) return;
+    last = t;
+    draw(t);
+  }
+
+  let rz;
+  addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(resize, 120); });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { buildAtlas(); if (reduceMotion.matches) draw(0); });
+  new MutationObserver(() => { buildAtlas(); if (reduceMotion.matches) draw(0); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { buildAtlas(); if (reduceMotion.matches) draw(0); });
+
+  resize();
+  if (reduceMotion.matches) return;
+
+  addEventListener("pointermove", e => {
+    if (e.pointerType !== "mouse") return;
+    ptr.x = e.clientX; ptr.y = e.clientY; ptr.target = 1;
+  }, { passive: true });
+  document.documentElement.addEventListener("pointerleave", () => { ptr.target = 0; });
+  addEventListener("blur", () => { ptr.target = 0; });
+  addEventListener("pointerdown", e => {
+    waves.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+    if (waves.length > 6) waves.shift();
+  }, { passive: true });
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
